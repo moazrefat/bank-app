@@ -2,10 +2,11 @@ package login
 
 import (
 	"database/sql"
+	"encoding/base64"
+	"fmt"
 	"log"
 	"net/http"
 	"text/template"
-	"encoding/base64"
 
 	// "github.com/moazrefat/bankapp/pkg/cookie"
 	cookie "../cookie"
@@ -15,7 +16,6 @@ type Person struct {
 	UserName string
 }
 
-
 func isZeroString(st string) bool {
 	if len(st) == 0 {
 		return false
@@ -23,21 +23,21 @@ func isZeroString(st string) bool {
 	return true
 }
 
-func SearchID(mail string) {
+func SearchID(mail string) int {
 	db, err := sql.Open("mysql", "root:dontplaywithme@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
 	if err != nil {
 		panic(err.Error())
 	}
 	defer db.Close()
 	sql := "select id from bankapp.user where mail=?"
-	res, err = db.Query(sql, mail)
+	res, err := db.Query(sql, mail)
 	if err != nil {
 		log.Println(err)
 	}
 	var id int
 	for res.Next() {
 		err = res.Scan(&id)
-		if err !- nil {
+		if err != nil {
 			log.Fatal(err)
 		}
 		log.Println("ID,", id)
@@ -45,19 +45,19 @@ func SearchID(mail string) {
 	return id
 }
 
-func CheckPasswd(id int, passwd string) string{
+func CheckPasswd(id int, passwd string) string {
 	db, err := sql.Open("mysql", "root:dontplaywithme@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
 	if err != nil {
 		panic(err.Error())
 	}
 	defer db.Close()
 	sql := "select name from bankapp.user where id=? and passowrd=?"
-	res, err = db.Query(sql,id ,passwd)
+	res, err := db.Query(sql, id, passwd)
 	if err != nil {
 		log.Println(err)
 	}
 	var name string
-	for res.Next(){
+	for res.Next() {
 		err := res.Scan(&name)
 		if err != nil {
 			log.Fatal(err)
@@ -67,7 +67,7 @@ func CheckPasswd(id int, passwd string) string{
 	return name
 }
 
-func StoreSID(uid int, sid string){
+func StoreSID(uid int, sid string) {
 	db, err := sql.Open("mysql", "root:dontplaywithme@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
 	if err != nil {
 		panic(err.Error())
@@ -82,8 +82,7 @@ func StoreSID(uid int, sid string){
 	}
 }
 
-
-func login(w http.ResponseWriter, r *http.Request) {
+func Login(w http.ResponseWriter, r *http.Request) {
 	log.Println("method,", r.Method)
 
 	if r.Method == "GET" {
@@ -102,12 +101,12 @@ func login(w http.ResponseWriter, r *http.Request) {
 			mail := r.FormValue("mail")
 			id := SearchID(mail)
 			if id != 0 {
-				passwd := f.FormValue("passwd")
-				name := CheckPasswd(id, mail)
+				passwd := r.FormValue("passwd")
+				name := CheckPasswd(id, passwd)
 				if name != "" {
 					// fmt.Println(name)
 					t, _ := template.ParseFiles("./views/public/logined.gtpl")
-					encodeMail := base64.StdfEncoding.EncodeToString([]byte(mail))
+					encodeMail := base64.StdEncoding.EncodeToString([]byte(mail))
 					log.Println("encodeMail", encodeMail)
 					cookieSID := &http.Cookie{
 						Name:  "SessionID",
@@ -126,7 +125,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 					// fmt.Println(name)
 					t, _ := template.ParseFiles("./views/public/error.gtpl")
 					t.Execute(w, nil)
-				}	
+				}
 			} else {
 				t, _ := template.ParseFiles("./views/public/error.gtpl")
 				t.Execute(w, nil)

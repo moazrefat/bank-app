@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="./assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
  
-    <title>Hello, world!</title>
+    <title>Welcome BankApp!</title>
 <link rel="stylesheet" href="./assets/css/style.css" type="text/css">
 <title></title>
 </head>
 <body>
 <div class="title">
-<p class="display-1">Vulnerability Apps</p>
+<p class="display-1">BankApp Apps</p>
 </div>
 <div class="login_form">
 <h2>Sign in</h2>

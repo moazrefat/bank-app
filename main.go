@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -14,14 +15,19 @@ func main() {
 	fmt.Println("bank-app is starting ... ")
 	var portNum = flag.String("p", "80", "Specify application server listening port")
 	flag.Parse()
-	fmt.Println("Vulnapp server listening : " + *portNum)
 
-	http.HandleFunc("/", welcome)
+	http.HandleFunc("/", Welcome)
 	http.HandleFunc("/login", login.Login)
-	// http.HandleFunc("/welcomepage", welcomepage)
+	fmt.Println("bankapp server listening : " + *portNum)
+	err := http.ListenAndServe(":"+*portNum, nil)
+	if err != nil {
+		log.Fatal("ListenAndServe: ", err)
+	}
 }
 
-func welcome(w http.ResponseWriter, r *http.Request) {
+// http.HandleFunc("/welcomepage", welcomepage)
+
+func Welcome(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("this is welcome message")
 }
 
