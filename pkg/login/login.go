@@ -7,8 +7,8 @@ import (
 	"text/template"
 	"encoding/base64"
 
-	"github.com/moazrefat/bankapp/pkg/cookie"
-	// cookie "../cookie"
+	// "github.com/moazrefat/bankapp/pkg/cookie"
+	cookie "../cookie"
 )
 
 type Person struct {
