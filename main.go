@@ -6,7 +6,8 @@ import (
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/moazrefat/pkg/login"
+	"github.com/moazrefat/bankapp/pkg/login"
+	// login "./pkg/login"
 )
 
 func main() {
