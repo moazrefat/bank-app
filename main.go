@@ -7,12 +7,12 @@ import (
 	"net/http"
 	"strconv"
 
-	"./pkg/cookie"
 	_ "github.com/go-sql-driver/mysql"
-
+	// cookie "./pkg/cookie"
 	// login "./pkg/login"
 	// logout "./pkg/logout"
 	// register "./pkg/register"
+	"github.com/moazrefat/bankapp/pkg/cookie"
 	"github.com/moazrefat/bankapp/pkg/login"
 	"github.com/moazrefat/bankapp/pkg/logout"
 	"github.com/moazrefat/bankapp/pkg/register"
@@ -34,7 +34,7 @@ func main() {
 	http.HandleFunc("/profile", Profile)
 	http.HandleFunc("/home", login.LoginedHome)
 	http.HandleFunc("/register", register.NewUserRegister)
-	log.Println("bankapp server listening : " + *portNum)
+	log.Println("BankApp server listening : " + *portNum)
 	err := http.ListenAndServe(":"+*portNum, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)

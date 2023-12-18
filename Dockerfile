@@ -1,23 +1,27 @@
 FROM golang:1.21.5 AS build-stage
 
 WORKDIR /app
+COPY . .
 
-COPY go.mod go.sum /
-# RUN go mod download
+RUN GOOS=linux go build -o /bankapp main.go
 
-
-COPY * /app/
-RUN GOOS=linux go build -o ./bankapp main.go
-
-
-FROM gcr.io/distroless/base-debian11 AS build-release-stage
-
+# FROM gcr.io/distroless/static-debian11 AS build-release-stage
+FROM alpine:latest AS build-release-stage
 WORKDIR /
 
-COPY --from=build-stage /app/bankapp /bankapp
+COPY --from=build-stage /bankapp /bankapp
 
 EXPOSE 8080
 
-USER nonroot:nonroot
+ENTRYPOINT ["sleep","10000000000"]
 
-ENTRYPOINT ["/bankapp", "-p", "8080"]
+# FROM golang:1.21.5
+
+# WORKDIR /
+# COPY . .
+
+# RUN GOOS=linux go build -gcflags "all=-N -l" -o /bankapp
+
+# EXPOSE 8080
+
+# ENTRYPOINT ["/bankapp", "-p", "8080"]
