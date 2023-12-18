@@ -10,7 +10,7 @@ import (
 )
 
 func CheckSessionsCount(uid int, sid string) bool {
-	db, err := sql.Open("mysql", "root:dontplaywithme@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
+	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -34,7 +34,7 @@ func CheckSessionsCount(uid int, sid string) bool {
 }
 
 func ValidateCorrectCookie(uid int, sid string) bool {
-	db, err := sql.Open("mysql", "root:dontplaywithme@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
+	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -150,7 +150,7 @@ func GetUserIDFromCookie(r *http.Request) (userNameCookie string, sessionIDCooki
 		email := string(decodeEmail)
 		log.Println(email)
 
-		db, err := sql.Open("mysql", "root:dontplaywithme@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
+		db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
 		if err != nil {
 			log.Fatal(err)
 		}

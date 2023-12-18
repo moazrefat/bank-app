@@ -13,9 +13,9 @@ import (
 	// login "./pkg/login"
 	// logout "./pkg/logout"
 	// register "./pkg/register"
-	login "github.com/moazrefat/bankapp/pkg/login"
-	logout "github.com/moazrefat/bankapp/pkg/logout"
-	register "github.com/moazrefat/bankapp/pkg/register"
+	"github.com/moazrefat/bankapp/pkg/login"
+	"github.com/moazrefat/bankapp/pkg/logout"
+	"github.com/moazrefat/bankapp/pkg/register"
 )
 
 type Person struct {

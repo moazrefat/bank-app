@@ -19,7 +19,7 @@ type Person struct {
 }
 
 func CheckUserDeplicate(email string) bool {
-	db, err := sql.Open("mysql", "root:dontplaywithme@tcp(127.0.0.1:3306)/bankapp")
+	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -41,7 +41,7 @@ func CheckUserDeplicate(email string) bool {
 }
 
 func RegisterUser(r *http.Request) bool {
-	db, err := sql.Open("mysql", "root:dontplaywithme@tcp(127.0.0.1:3306)/bankapp")
+	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp")
 	if err != nil {
 		log.Fatal(err)
 	}

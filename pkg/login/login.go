@@ -9,8 +9,8 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
-	cookie "github.com/moazrefat/bankapp/pkg/cookie"
 	// cookie "../cookie"
+	"github.com/moazrefat/bankapp/pkg/cookie"
 )
 
 type Person struct {
@@ -28,7 +28,7 @@ func isZeroString(st string) bool {
 }
 
 func SearchID(email string) int {
-	db, err := sql.Open("mysql", "root:dontplaywithme@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
+	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -55,7 +55,7 @@ func LoginedHome(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-	db, err := sql.Open("mysql", "root:dontplaywithme@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
+	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -115,7 +115,7 @@ func BcryptPasswd(passwd string) []byte {
 }
 
 func BcryptValidation(id int, passwd string) bool {
-	db, err := sql.Open("mysql", "root:dontplaywithme@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
+	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -149,7 +149,7 @@ func BcryptValidation(id int, passwd string) bool {
 
 func CheckPasswd(id int, passwd string) (string, bool) {
 	// passwdStatus := BcryptValidation(passwd)
-	db, err := sql.Open("mysql", "root:dontplaywithme@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
+	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -171,7 +171,7 @@ func CheckPasswd(id int, passwd string) (string, bool) {
 }
 
 func StoreSID(uid int, sid string) {
-	db, err := sql.Open("mysql", "root:dontplaywithme@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
+	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
 	if err != nil {
 		panic(err.Error())
 	}
