@@ -10,14 +10,20 @@
     <link rel="stylesheet" href="./assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
  
-    <title>Welcome BankApp!</title>
+    <title>Hello, world!</title>
 <link rel="stylesheet" href="./assets/css/style.css" type="text/css">
 <title></title>
 </head>
 <body>
 <div class="title">
-<p class="display-1">BankApp Apps</p>
+<p class="display-1">BankApp</p>
 </div>
+<ul id="nav">
+  <li><a href="/">Home</a></li>
+  <li><a href="/login">Login</a></li>
+  <li><a href="/register">Register</a></li>
+  <li><a href="/logout">Logout</a></li>
+<ul>
 <div class="login_form">
 <h2>Sign in</h2>
 <form action="/login" method="post">
@@ -28,7 +34,7 @@
 </div>
 <div class="register_form">
 <h2>New User Register</h2>
-<form action="/new" method="post">
+<form action="/register" method="post">
     <p>Mail-Address:<input type="email" name="mail" required></p>
     <p>Name:<input type="text" name="name" onsubmit="return validateForm()" required></p>
     <p>Age:<input type="number" name="age" min="0" max="125" pattern=" 0+\.[0-9]*[1-9][0-9]*$" required></p>

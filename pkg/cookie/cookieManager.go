@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"encoding/base64"
 	"errors"
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -17,15 +16,15 @@ func CheckSessionsCount(uid int, sid string) bool {
 	}
 	defer db.Close()
 
-	fmt.Println("uid : ", uid)
+	log.Println("uid : ", uid)
 
 	var count int
 
 	if err := db.QueryRow("select count(sessionid) from bankapp.sessions where uid=?", uid).Scan(&count); err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 
-	fmt.Println("count is : ", count)
+	log.Println("count is : ", count)
 
 	if count != 0 {
 		return false
@@ -43,7 +42,7 @@ func ValidateCorrectCookie(uid int, sid string) bool {
 
 	var sessionID string
 	if err := db.QueryRow("select sessionid from bankapp.sessions where uid=?", uid).Scan(&sessionID); err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 
 	if sessionID == sid {
@@ -57,13 +56,13 @@ func ValidateCorrectCookie(uid int, sid string) bool {
 func CheckSessionID(r *http.Request) bool {
 	sessionID, err := r.Cookie("SessionID")
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return false
 	}
 
 	userID, err := r.Cookie("UserID")
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return false
 	}
 
@@ -73,7 +72,7 @@ func CheckSessionID(r *http.Request) bool {
 
 	uid, err := strconv.Atoi(userID.Value)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 
 	if ValidateCorrectCookie(uid, sessionID.Value) {
@@ -87,23 +86,23 @@ func CheckSessionID(r *http.Request) bool {
 func GetCookieValue(r *http.Request) (SessionID string, UserName string, UserID int, err error) {
 	sessionID, err := r.Cookie("SessionID")
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return "", "", 0, err
 	}
 
 	userID, err := r.Cookie("UserID")
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 	uid, err := strconv.Atoi(userID.Value)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return "", "", 0, err
 	}
 
 	userName, err := r.Cookie("UserName")
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return "", "", 0, err
 	}
 
@@ -113,15 +112,15 @@ func GetCookieValue(r *http.Request) (SessionID string, UserName string, UserID 
 func CheckCookieOnlyLogin(r *http.Request) (userNameCookie string, sessionIDCookie string, err error) {
 	userName, err := r.Cookie("UserName")
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 
 	sessionID, err := r.Cookie("SessionID")
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 
-	fmt.Println(userName, sessionID)
+	log.Println(userName, sessionID)
 
 	if userName.Value == "" && sessionID.Value == "" {
 		return "", "", errors.New("Cookie not exsit")
@@ -133,23 +132,23 @@ func CheckCookieOnlyLogin(r *http.Request) (userNameCookie string, sessionIDCook
 func GetUserIDFromCookie(r *http.Request) (userNameCookie string, sessionIDCookie string, userIDCookie int, err error) {
 	userName, err := r.Cookie("UserName")
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 
 	sessionID, err := r.Cookie("SessionID")
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 
 	if userName.Value == "" && sessionID.Value == "" {
 		return "", "", 0, errors.New("not exist cookie")
 	} else {
-		decodeMail, err := base64.StdEncoding.DecodeString(sessionID.Value)
+		decodeEmail, err := base64.StdEncoding.DecodeString(sessionID.Value)
 		if err != nil {
-			fmt.Println(err)
+			log.Println(err)
 		}
-		mail := string(decodeMail)
-		fmt.Println(mail)
+		email := string(decodeEmail)
+		log.Println(email)
 
 		db, err := sql.Open("mysql", "root:dontplaywithme@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
 		if err != nil {
@@ -158,8 +157,8 @@ func GetUserIDFromCookie(r *http.Request) (userNameCookie string, sessionIDCooki
 		defer db.Close()
 
 		var userID int
-		if err := db.QueryRow("select id from user where mail=?", mail).Scan(&userID); err != nil {
-			fmt.Println("no set :", err)
+		if err := db.QueryRow("select id from user where email=?", email).Scan(&userID); err != nil {
+			log.Println("no set :", err)
 		}
 
 		log.Println(userID)

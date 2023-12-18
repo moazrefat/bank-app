@@ -14,7 +14,7 @@
  
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/style.css" type="text/css"> 
+    <link rel="stylesheet" href="./assets/css/stylewelcome.css" type="text/css"> 
  
     <title>Welcome Page</title>
 <ul id="nav">
@@ -30,8 +30,8 @@
 
 <body>
 <div style="text-align:center">
-  See you later
-  <p>bye bye!!!</p>
+  Please login first 
+  <p>in order to get access.</p>
 </div>
 </body>
 </html>

@@ -10,18 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/style.css" type="text/css"> 
  
-    <title>Top Page</title>
- 
-<ul id="nav">
-  <li><div class="username">{{.UserName}}</div></li>
-  <li><a href="/top">Home</a></li>
-  <li><a href="/profile">Profile</a></li>
-  <li><a href="/timeline">TimeLine</a></li>
-  <li><a href="/post">Post</a></li>
-  <li><a href="/hints">Hints</a></li>
-  <li><a href="/db">DB</a></li>
-  <li><a href="/logout">Logout</a></li>
-<ul>
+    <title>Home Page</title>
 </head>
 
 
@@ -30,7 +19,11 @@
 </div>
 
 <body>
-
+<ul id="nav">
+  <li><a href="/home">Home</a></li>
+  <li><a href="/profile">Profile</a></li>
+  <li><a href="/logout">Logout</a></li>
+<ul>
 
 <div class="box">
 <div class="cp_cont">

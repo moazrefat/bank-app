@@ -14,12 +14,18 @@
 </head>
 <body>
 <div class="title">
-<p class="display-1 text-center">Vulnerability Apps</p>
+<p class="display-1 text-center">BankApp</p>
 </div>
+<ul id="nav">
+  <li><a href="/">Home</a></li>
+  <li><a href="/login">Login</a></li>
+  <li><a href="/register">Register</a></li>
+  <li><a href="/logout">Logout</a></li>
+<ul>
 <div class="register_form">
 <h2>New User Register</h2>
-<form action="/new" method="post">
-    <p>Mail-Address:<input type="email" name="mail" required></p>
+<form action="/register" method="post">
+    <p>Email-Address:<input type="email" name="email" required></p>
     <p>Name:<input type="text" name="name" onsubmit="return validateForm()" required></p>
     <p>Age:<input type="number" name="age" min="0" max="125" pattern=" 0+\.[0-9]*[1-9][0-9]*$" required></p>
     <br>

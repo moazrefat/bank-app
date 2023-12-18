@@ -19,7 +19,7 @@ p { color:#ffffff;
         font-family: 'Inconsolata', monospace;}
 
 .center {
-          position: absolute;
+            position: absolute;
           text-align: center;
           color: #ffffff;
 }
@@ -63,13 +63,6 @@ p { color:#ffffff;
   padding: 20px;
   text-align: center;
   justify-content: center;
-}
-
-#text {
-  color:#ffffff;
-  font-size: 1px;
-  text-align: center;
-  font-family: 'Inconsolata', monospace;
 }
 
 #header_title {
@@ -150,34 +143,4 @@ p { color:#ffffff;
 @keyframes anime14_text {
 	0%   { top: 100%; }
 	100% { top: -200%; }
-}
-
-
-.profileInfo {
-  justify-content: center;
-  text-align: center;
-  display: flex;
-
-}
-
-table {
-  width: 500px; /* Adjust the width as needed */
-  border-collapse: collapse;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* height: 50vh;
-  width: 10vw; */
-  margin: 5;
-  padding: 0; 
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
-}
-
-th {
-  background-color: #220bee;
 }

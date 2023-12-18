@@ -15,7 +15,7 @@
 <body>
 <div class="center">
 	<p class="display-1 text-center">Register Failed...</p>
-    <h2>Your mail-address already registerd</h2>
+    <h2>Your email-address already registerd</h2>
     <h3><a href="/login">Back</a></h3>
 </div>
 </body>
