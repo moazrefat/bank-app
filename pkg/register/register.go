@@ -26,7 +26,7 @@ func CheckUserDeplicate(email string) bool {
 	defer db.Close()
 
 	var count int
-	if err = db.QueryRow("select count(email) from user where mail=?", email).Scan(&count); err != nil {
+	if err = db.QueryRow("select count(email) from user where email=?", email).Scan(&count); err != nil {
 		fmt.Println("db error : ", err)
 	} else {
 		fmt.Println(reflect.TypeOf(count))

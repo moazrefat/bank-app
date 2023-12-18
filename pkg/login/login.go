@@ -9,8 +9,8 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
-	// "github.com/moazrefat/bankapp/pkg/cookie"
-	cookie "../cookie"
+	cookie "github.com/moazrefat/bankapp/pkg/cookie"
+	// cookie "../cookie"
 )
 
 type Person struct {
@@ -199,7 +199,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
 		if isZeroString(r.FormValue("email")) && isZeroString(r.FormValue("passwd")) {
 			log.Println("passwd", r.Form["passwd"])
-			log.Println("mail", r.Form["email"])
+			log.Println("email", r.Form["email"])
 
 			email := r.FormValue("email")
 			id := SearchID(email)

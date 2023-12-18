@@ -27,7 +27,7 @@
 <div class="login_form">
 <h2>Sign in</h2>
 <form action="/login" method="post">
-    <p>Mail-Address:<input type="email" name="mail" required></p>
+    <p>Email-Address:<input type="email" name="email" required></p>
     <p>Password:<input type="password" name="passwd" required></p>
     <input type="submit" value="Login">
 </form>
@@ -35,7 +35,7 @@
 <div class="register_form">
 <h2>New User Register</h2>
 <form action="/register" method="post">
-    <p>Mail-Address:<input type="email" name="mail" required></p>
+    <p>Email-Address:<input type="email" name="email" required></p>
     <p>Name:<input type="text" name="name" onsubmit="return validateForm()" required></p>
     <p>Age:<input type="number" name="age" min="0" max="125" pattern=" 0+\.[0-9]*[1-9][0-9]*$" required></p>
     <br>

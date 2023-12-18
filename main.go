@@ -10,10 +10,12 @@ import (
 	"./pkg/cookie"
 	_ "github.com/go-sql-driver/mysql"
 
-	// "github.com/moazrefat/bankapp/pkg/login"
-	login "./pkg/login"
-	logout "./pkg/logout"
-	register "./pkg/register"
+	// login "./pkg/login"
+	// logout "./pkg/logout"
+	// register "./pkg/register"
+	login "github.com/moazrefat/bankapp/pkg/login"
+	logout "github.com/moazrefat/bankapp/pkg/logout"
+	register "github.com/moazrefat/bankapp/pkg/register"
 )
 
 type Person struct {
