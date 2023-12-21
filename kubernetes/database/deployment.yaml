@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: bankapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-db
+  minReadySeconds: 10
+#  strategy:
+#    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql-db
+    spec:
+      containers:
+      - image: docker.io/moazrefat/bankapp:db
+        name: mysql-db
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3306
+          protocol: TCP
+        envFrom:
+          - configMapRef:
+              name: mysql-config

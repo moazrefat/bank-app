@@ -19,12 +19,12 @@ type Person struct {
 }
 
 func CheckUserDeplicate(email string) bool {
-	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp")
+	db, err := sql.Open("mysql", "user:password@tcp(database.bankapp.svc:3306)/bankapp")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
-
+	log.Println("connecting to database ...")
 	var count int
 	if err = db.QueryRow("select count(email) from user where email=?", email).Scan(&count); err != nil {
 		fmt.Println("db error : ", err)
@@ -41,11 +41,12 @@ func CheckUserDeplicate(email string) bool {
 }
 
 func RegisterUser(r *http.Request) bool {
-	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp")
+	db, err := sql.Open("mysql", "user:password@tcp(database.bankapp.svc:3306)/bankapp")
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	defer db.Close()
+	log.Println("connecting to database ...")
 	age, err := strconv.Atoi(r.FormValue("age"))
 	if err != nil {
 		fmt.Println(err)

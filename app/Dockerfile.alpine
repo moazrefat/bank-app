@@ -1,0 +1,21 @@
+################### 3
+FROM golang:1.18 AS build-stage
+
+WORKDIR /workspace
+COPY . .
+# RUN go mod download
+ENV GO111MODULE=on
+RUN CGO_ENABLED=0 GOOS=linux go build -o ./bankapp main.go
+
+FROM alpine:latest
+WORKDIR /app
+
+COPY --from=build-stage --chown=nonroot:nonroot /workspace/assets /app/assets/
+COPY --from=build-stage --chown=nonroot:nonroot /workspace/pkg /app/pkg/
+COPY --from=build-stage --chown=nonroot:nonroot /workspace/views /app/views/
+COPY --from=build-stage --chown=nonroot:nonroot /workspace/bankapp /app/
+
+EXPOSE 8080
+
+ENTRYPOINT ["/app/bankapp", "-p", "8080"]
+# ENTRYPOINT ["sleep","1000000000"]

@@ -10,6 +10,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	// cookie "../cookie"
+
 	"github.com/moazrefat/bankapp/pkg/cookie"
 )
 
@@ -28,11 +29,12 @@ func isZeroString(st string) bool {
 }
 
 func SearchID(email string) int {
-	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
+	db, err := sql.Open("mysql", "user:password@tcp(database.bankapp.svc:3306)/bankapp?parseTime=true")
 	if err != nil {
 		panic(err.Error())
 	}
 	defer db.Close()
+	log.Println("connecting to database ...")
 	sql := "select id from bankapp.user where email=?"
 	res, err := db.Query(sql, email)
 	if err != nil {
@@ -49,62 +51,6 @@ func SearchID(email string) int {
 	return id
 }
 
-func LoginedHome(w http.ResponseWriter, r *http.Request) {
-
-	_, _, userID, err := cookie.GetUserIDFromCookie(r)
-	if err != nil {
-		log.Println(err)
-	}
-	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
-	if err != nil {
-		panic(err.Error())
-	}
-	defer db.Close()
-	sql := "select name,email,age from bankapp.user where id=?"
-	res, err := db.Query(sql, userID)
-	if err != nil {
-		log.Println(err)
-	}
-	var Age int
-	var Name, Email string
-	for res.Next() {
-		err := res.Scan(&Name, &Email, &Age)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-	log.Printf("name:%v, Email:%v, Age:%v", Name, Email, Age)
-	var data Person
-	data.Name = Name
-	data.Age = Age
-	data.Email = Email
-	t, _ := template.ParseFiles("./views/public/loginedhome.gtpl")
-	t.Execute(w, data)
-}
-
-func LogoutedHome(w http.ResponseWriter, r *http.Request) {
-	_, sessionID, userID, err := cookie.GetUserIDFromCookie(r)
-	if err != nil {
-		log.Println(err)
-	}
-	if cookie.CheckSessionsCount(userID, sessionID) {
-		StoreSID(userID, sessionID)
-	} else {
-		log.Println("not register sessionID")
-	}
-
-	if sessionID == "" {
-		t, _ := template.ParseFiles("./views/public/logoutedhome.gtpl")
-		t.Execute(w, nil)
-	} else {
-		if r.Method == "GET" {
-			http.Redirect(w, r, "/home", 302)
-		} else {
-			http.NotFound(w, r)
-		}
-	}
-}
-
 func BcryptPasswd(passwd string) []byte {
 	bcryptPasswd, err := bcrypt.GenerateFromPassword([]byte(passwd), bcrypt.MinCost)
 	if err != nil {
@@ -115,12 +61,13 @@ func BcryptPasswd(passwd string) []byte {
 }
 
 func BcryptValidation(id int, passwd string) bool {
-	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
+	db, err := sql.Open("mysql", "user:password@tcp(database.bankapp.svc:3306)/bankapp?parseTime=true")
 	if err != nil {
 		panic(err.Error())
 	}
 	defer db.Close()
 	sql := "select passwd from bankapp.user where id=?"
+	log.Printf("connecting to database {%v}", sql)
 	res, err := db.Query(sql, id)
 	if err != nil {
 		log.Println(err)
@@ -149,12 +96,13 @@ func BcryptValidation(id int, passwd string) bool {
 
 func CheckPasswd(id int, passwd string) (string, bool) {
 	// passwdStatus := BcryptValidation(passwd)
-	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
+	db, err := sql.Open("mysql", "user:password@tcp(database.bankapp.svc:3306)/bankapp?parseTime=true")
 	if err != nil {
 		panic(err.Error())
 	}
 	defer db.Close()
 	sql := "select name from bankapp.user where id=?"
+	log.Printf("connecting to database {%v}", sql)
 	res, err := db.Query(sql, id)
 	if err != nil {
 		log.Println(err)
@@ -171,11 +119,12 @@ func CheckPasswd(id int, passwd string) (string, bool) {
 }
 
 func StoreSID(uid int, sid string) {
-	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
+	db, err := sql.Open("mysql", "user:password@tcp(database.bankapp.svc:3306)/bankapp?parseTime=true")
 	if err != nil {
 		panic(err.Error())
 	}
 	defer db.Close()
+	log.Println("connecting to database ...")
 	if cookie.CheckSessionsCount(uid, sid) {
 		_, err = db.Exec("insert into bankapp.sessions(uid,sessionid) value (?,?)", uid, sid)
 		if err != nil {
@@ -206,7 +155,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			if id != 0 {
 				passwd := r.FormValue("passwd")
 				name, passwordStatus := CheckPasswd(id, passwd)
-				log.Println("passwordStatus", passwordStatus)
+				// log.Println("passwordStatus", passwordStatus)
 				if name != "" && passwordStatus {
 					// fmt.Println(name)
 					t, _ := template.ParseFiles("./views/public/logined.gtpl")

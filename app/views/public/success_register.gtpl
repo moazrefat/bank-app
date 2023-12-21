@@ -16,7 +16,7 @@
 <div class="center">
 	<p class="display-1 text-center">Register successful !!!!</p>
     <h2>Welcome , {{.UserName}} !!</h2>
-    <h2><a href="/top">Top Page</a></h2>
+    <h2><a href="/home">hHme Page</a></h2>
 </div>
 </body>
 </html>

@@ -10,7 +10,7 @@ import (
 )
 
 func CheckSessionsCount(uid int, sid string) bool {
-	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
+	db, err := sql.Open("mysql", "user:password@tcp(database.bankapp.svc:3306)/bankapp?parseTime=true")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -23,7 +23,7 @@ func CheckSessionsCount(uid int, sid string) bool {
 	if err := db.QueryRow("select count(sessionid) from bankapp.sessions where uid=?", uid).Scan(&count); err != nil {
 		log.Println(err)
 	}
-
+	log.Println("connecting to database ...")
 	log.Println("count is : ", count)
 
 	if count != 0 {
@@ -34,12 +34,12 @@ func CheckSessionsCount(uid int, sid string) bool {
 }
 
 func ValidateCorrectCookie(uid int, sid string) bool {
-	db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
+	db, err := sql.Open("mysql", "user:password@tcp(database.bankapp.svc:3306)/bankapp?parseTime=true")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
-
+	log.Println("connecting to database ...")
 	var sessionID string
 	if err := db.QueryRow("select sessionid from bankapp.sessions where uid=?", uid).Scan(&sessionID); err != nil {
 		log.Println(err)
@@ -150,7 +150,7 @@ func GetUserIDFromCookie(r *http.Request) (userNameCookie string, sessionIDCooki
 		email := string(decodeEmail)
 		log.Println(email)
 
-		db, err := sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/bankapp?parseTime=true")
+		db, err := sql.Open("mysql", "user:password@tcp(database.bankapp.svc:3306)/bankapp?parseTime=true")
 		if err != nil {
 			log.Fatal(err)
 		}

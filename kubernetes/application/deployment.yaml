@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bankapp
+  namespace: bankapp
+  labels:
+    app: bankapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bankapp
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: bankapp
+    spec:
+      # initContainers:
+      # - name: init-container
+      #   image: busybox:latest
+      #   command: ['sh', '-c', 'echo "This is some content" > /tmp/my-file.txt']
+      #   volumeMounts:
+      #   - name: hostpath-volume
+      #     mountPath: /tmp
+      containers:
+      - name: bankapp
+        image: docker.io/moazrefat/bankapp:v1
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "150Mi"
+          requests:
+            cpu: "100m"
+            memory: "100Mi"
+        ports:
+        - containerPort: 8080
+        # livenessProbe:
+        #   httpGet:
+        #     path: /api/version
+        #     port: 8080
+        # readinessProbe:
+        #   httpGet:
+        #     path: /api/health
+        #     port: 8080
+        envFrom:
+          - configMapRef:
+              name: bankapp-config
+      #   volumeMounts:
+      #   - name: hostpath-volume
+      #     mountPath: /tmp
+      # volumes:
+      # - name: hostpath-volume
+      #   hostPath:
+      #     path: /tmp

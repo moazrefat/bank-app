@@ -38,6 +38,9 @@
     <tr>
       <td>Email:{{.Email}}</td>
     </tr>
+    <tr>
+      <td>Address:{{.Address}}</td>
+    </tr>
   </table>
 
 </body>

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+  namespace: bankapp
+  labels:
+    app: mysql-db
+data:
+  MYSQL_ROOT_PASSWORD: password
+  MYSQL_DATABASE: bankapp
+  MYSQL_USER: user
+  MYSQL_PASSWORD: password
