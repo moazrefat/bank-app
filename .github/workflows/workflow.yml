@@ -62,7 +62,7 @@ jobs:
       scan-digest: ${{ steps.calculate-scan-hash.outputs.scan_digest }}
     steps:
     - name: Scan for vulnerabilities
-      uses: aquasecurity/trivy-action@@master
+      uses: aquasecurity/trivy-action@master
       with: 
         image-ref: ${{ env.registry }}:${{ matrix.names }}
         format: cosign-vuln
