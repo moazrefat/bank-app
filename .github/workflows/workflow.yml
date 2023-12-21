@@ -48,6 +48,7 @@ jobs:
           file: ${{ matrix.names }}/Dockerfile
           tags: ${{ env.registry }}:${{ matrix.names }}
           platforms: linux/x86_64
+          
   security-scan:
     runs-on: [ self-hosted ]
     needs: build-and-push
@@ -83,7 +84,7 @@ jobs:
         path: ${{ matrix.names }}-scan.json
         if-no-files-found: error
   
-  check-and-sign: 
+  verify-and-sign: 
     runs-on: [ self-hosted ]
     needs: security-scan
     permissions:
@@ -91,7 +92,8 @@ jobs:
         actions: read
         packages: write
         id-token: write
-
+    env:
+        SCAN_DIGEST: "${{ needs.scan.outputs.scan-digest }}"
     strategy:
         fail-fast: false
         matrix:
