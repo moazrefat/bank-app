@@ -93,7 +93,7 @@ jobs:
         packages: write
         id-token: write
     env:
-        SCAN_DIGEST: "${{ needs.scan.outputs.scan-digest }}"
+        SCAN_DIGEST: "${{ needs.security-scan.outputs.scan-digest }}"
     strategy:
         fail-fast: false
         matrix:
