@@ -47,7 +47,7 @@ jobs:
           context: ./${{ matrix.names }}
           file: ${{ matrix.names }}/Dockerfile
           tags: ${{ env.registry }}:${{ matrix.names }}
-    
+          platforms: linux/x86_64
   security-scan:
     runs-on: [ self-hosted ]
     needs: build-and-push
