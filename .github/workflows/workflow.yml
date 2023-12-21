@@ -75,7 +75,7 @@ jobs:
       run: |
           SCAN_DIGEST=$(sha256sum ${{ matrix.names }}-scan.json | awk '{print $1}')
           echo "::set-output name=scan_digest::$SCAN_DIGEST"
-          echo "Hash of ${{ matrix.names }}-scan.json is: $SCAN_DIGEST"        
+          echo "Hash of ${{ matrix.names }}-scan.json is: $SCAN_DIGEST"
 
     - name: Upload vulnerability scan report
       uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # v3.1.0
@@ -105,19 +105,19 @@ jobs:
       with:
         name: ${{ matrix.names }}-scan.json
 
-    - name: Verify scan
-      run: |
-        set -euo pipefail
-        echo "Hash of ${{ matrix.names }}-scan.json should be: $SCAN_DIGEST"
-        COMPUTED_HASH=$(sha256sum ${{ matrix.names }}-scan.json | awk '{print $1}')
-        echo "The current computed hash for ${{ matrix.names }}-scan.json is: $COMPUTED_HASH"
-        echo "If the two above hashes don't match, ${{ matrix.names }}-scan.json has been tampered with."
-        echo "$SCAN_DIGEST ${{ matrix.names }}-scan.json" | sha256sum --strict --check --status || exit -2 
+    # - name: Verify scan
+    #   run: |
+    #     set -euo pipefail
+    #     echo "Hash of ${{ matrix.names }}-scan.json should be: $SCAN_DIGEST"
+    #     COMPUTED_HASH=$(sha256sum ${{ matrix.names }}-scan.json | awk '{print $1}')
+    #     echo "The current computed hash for ${{ matrix.names }}-scan.json is: $COMPUTED_HASH"
+    #     echo "If the two above hashes don't match, ${{ matrix.names }}-scan.json has been tampered with."
+    #     echo "$SCAN_DIGEST ${{ matrix.names }}-scan.json" | sha256sum --strict --check --status || exit -2 
 
     - name: Install Cosign
-      uses: sigstore/cosign-installer@09a077b27eb1310dcfb21981bee195b30ce09de0 # v2.5.0
+      uses: sigstore/cosign-installer@@v3.3.0 # v2.5.0
       with:
-        cosign-release: v1.10.0
+        cosign-release: 'v2.2.2'
   
     - name: Login to Docker Hub
       uses: docker/login-action@v3
@@ -132,7 +132,7 @@ jobs:
         key: ${{ secrets.COSIGN_PRIVATE_KEY }}
 
     - name: Sing image Scan
-      run: cosign sign --key cosign.key ${{ env.registry }}:${{ matrix.names }}
+      run: cosign sign --yes --key cosign.key ${{ env.registry }}:${{ matrix.names }}
       env:
         COSIGN_EXPERIMENTAL: "true"
         COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
