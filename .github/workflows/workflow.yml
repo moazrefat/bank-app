@@ -44,6 +44,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
+          context: ./${{ matrix.names }}
           file: ${{ matrix.names }}/Dockerfile
           tags: ${{ env.registry }}:${{ matrix.names }}
     
