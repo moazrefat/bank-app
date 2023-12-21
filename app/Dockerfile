@@ -40,33 +40,23 @@
 # ENTRYPOINT ["/bankapp", "-p", "8080"]
 
 #################### 3
-FROM golang:1.18 AS builder
+FROM golang:1.18 AS build-stage
 
 WORKDIR /workspace
-COPY go.mod go.mod
-COPY go.sum go.sum
+COPY . .
+# RUN go mod download
+ENV GO111MODULE=on
+RUN CGO_ENABLED=0 GOOS=linux go build -o ./bankapp main.go
 
-RUN go mod download
-# RUN go mod tidy
-# RUN go mod verify
-
-COPY main.go main.go
-COPY assets/ assets/
-COPY pkg/ pkg/
-COPY views/ views/
-
-RUN GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -gcflags "all=-N -l" -o ./bankapp main.go
-
-FROM gcr.io/distroless/static:nonroot
-
+FROM alpine:latest
 WORKDIR /app
+
 COPY --from=build-stage --chown=nonroot:nonroot /workspace/assets /app/assets/
 COPY --from=build-stage --chown=nonroot:nonroot /workspace/pkg /app/pkg/
 COPY --from=build-stage --chown=nonroot:nonroot /workspace/views /app/views/
 COPY --from=build-stage --chown=nonroot:nonroot /workspace/bankapp /app/
 
-COPY --from=builder /workspace/bankapp .
-
 EXPOSE 8080
 
-ENTRYPOINT ["/bankapp", "-p", "8080"]
+ENTRYPOINT ["/app/bankapp", "-p", "8080"]
+# ENTRYPOINT ["sleep","1000000000"]

@@ -107,7 +107,7 @@ jobs:
       run: |
         set -euo pipefail
         echo "Hash of ${{ matrix.names }}-scan.json should be: $SCAN_DIGEST"
-        COMPUTED_HASH=$(sha256sum scan.json | awk '{print $1}')
+        COMPUTED_HASH=$(sha256sum ${{ matrix.names }}-scan.json | awk '{print $1}')
         echo "The current computed hash for ${{ matrix.names }}-scan.json is: $COMPUTED_HASH"
         echo "If the two above hashes don't match, ${{ matrix.names }}-scan.json has been tampered with."
         echo "$SCAN_DIGEST ${{ matrix.names }}-scan.json" | sha256sum --strict --check --status || exit -2 
