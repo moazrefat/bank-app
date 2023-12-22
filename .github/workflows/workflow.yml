@@ -27,20 +27,23 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version: '^1.18'
-      - name: get names
+      - name: get container names
         id: get-containers
         run: |
           cd scripts/
           echo "names=$(go run main.go)" >> $GITHUB_OUTPUT
 
+  print-containers: 
+    runs-on: [ self-hosted ]
+    needs: [ get-containers]
+    steps:
       - name: print containers names
         id: print-containers
         run: echo "${{ needs.get-containers.outputs.names }}"
 
-
   build-and-push:
     runs-on: [ self-hosted ]
-    needs: get-containers
+    needs: [ get-containers, print-containers ]
     strategy:
         fail-fast: false
         matrix:
@@ -66,8 +69,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          context: ./${{ matrix.names }}
-          file: ${{ matrix.names }}/Dockerfile
+          context: ./containers/${{ matrix.names }}
+          file: ./containers/${{ matrix.names }}/Dockerfile
           tags: ${{ env.registry }}:${{ matrix.names }}
           platforms: linux/x86_64
           
