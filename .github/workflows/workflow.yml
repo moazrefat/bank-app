@@ -39,7 +39,7 @@ jobs:
     steps:
       - name: print containers names
         id: print-containers
-        run: echo "${{ needs.get-containers.outputs.names }}"
+        run: echo "${{ needs.get-containers-list.outputs.names }}"
 
   build-and-push:
     runs-on: [ self-hosted ]
@@ -47,7 +47,7 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
-          names: ${{ fromJson(needs.get-containers.outputs.names) }}
+          names: ${{ fromJson(needs.get-containers-list.outputs.names) }}
     name: ${{ matrix.names }}-build-push
     steps:
       - name: Checkout code
@@ -80,7 +80,7 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
-          names: ${{ fromJson(needs.get-containers.outputs.names) }}
+          names: ${{ fromJson(needs.get-containers-list.outputs.names) }}
     name: ${{ matrix.names }}-scan
     permissions:
       contents: read
