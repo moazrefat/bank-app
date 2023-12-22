@@ -76,7 +76,7 @@ jobs:
           
   security-scan:
     runs-on: [ self-hosted ]
-    needs: build-and-push
+    needs: [get-containers-list, build-and-push]
     strategy:
         fail-fast: false
         matrix:
@@ -113,7 +113,7 @@ jobs:
   
   verify-and-sign: 
     runs-on: [ self-hosted ]
-    needs: security-scan
+    needs: [get-containers-list, security-scan]
     permissions:
         contents: write
         actions: read
@@ -125,8 +125,8 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
-          names: [app,db]
-    name: ${{ matrix.names }}
+          names: ${{ fromJson(needs.get-containers-list.outputs.names) }}
+    name: ${{ matrix.names }}-sign
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
