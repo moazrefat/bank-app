@@ -30,6 +30,7 @@ jobs:
       - name: get names
         id: get-containers
         run: |
+          cd scripts/
           echo "names=$(go run main.go)" >> $GITHUB_OUTPUT
 
       - name: print containers names
