@@ -17,7 +17,7 @@ env:
   registry: docker.io/moazrefat/bankapp
           
 jobs: 
-  get-containers:
+  get-containers-list:
     runs-on: [ self-hosted ]
     outputs:
       names: ${{ steps.get-containers.outputs.names }}
@@ -33,7 +33,7 @@ jobs:
           cd scripts/
           echo "names=$(go run main.go)" >> $GITHUB_OUTPUT
 
-  print-containers: 
+  print-containers-list: 
     runs-on: [ self-hosted ]
     needs: [ get-containers]
     steps:
@@ -48,7 +48,7 @@ jobs:
         fail-fast: false
         matrix:
           names: ${{ fromJson(needs.get-containers.outputs.names) }}
-    name: ${{ matrix.names }}
+    name: ${{ matrix.names }}-build-push
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -80,8 +80,8 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
-          names: [app,db]
-    name: ${{ fromJson(needs.get-containers.outputs.names) }}
+          names: ${{ fromJson(needs.get-containers.outputs.names) }}
+    name: ${{ matrix.names }}-scan
     permissions:
       contents: read
     outputs:
