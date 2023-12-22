@@ -35,7 +35,7 @@ jobs:
 
   print-containers-list: 
     runs-on: [ self-hosted ]
-    needs: [ get-containers]
+    needs: [ get-containers-list ]
     steps:
       - name: print containers names
         id: print-containers
@@ -43,7 +43,7 @@ jobs:
 
   build-and-push:
     runs-on: [ self-hosted ]
-    needs: [ get-containers, print-containers ]
+    needs: [ get-containers-list , print-containers-list ]
     strategy:
         fail-fast: false
         matrix:
