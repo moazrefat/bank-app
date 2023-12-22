@@ -10,7 +10,7 @@ import (
 func main() {
 	// var list, f []string
 	folderList := []string{}
-	path := "../../containers"
+	path := "../containers"
 	folders, err := ioutil.ReadDir(path)
 	if err != nil {
 		log.Fatal(err)
