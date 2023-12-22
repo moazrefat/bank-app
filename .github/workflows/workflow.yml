@@ -85,7 +85,7 @@ jobs:
     permissions:
       contents: read
     outputs:
-      scan-app-digest: ${{ steps.calculate-scan-hash.outputs.scan_app_digest }}
+      scan-bankapp-digest: ${{ steps.calculate-scan-hash.outputs.scan_bankapp_digest }}
       scan-db-digest: ${{ steps.calculate-scan-hash.outputs.scan_db_digest }}
     steps:
     - name: Scan for vulnerabilities
@@ -100,7 +100,7 @@ jobs:
       id: calculate-scan-hash
       run: |
           SCAN_DIGEST=$(sha256sum ${{ matrix.names }}-scan.json | awk '{print $1}')
-          if [ ${{ matrix.names }} == "app" ]; then echo "::set-output name=scan_app_digest::$SCAN_DIGEST"; fi 
+          if [ ${{ matrix.names }} == "bankapp" ]; then echo "::set-output name=scan_bankapp_digest::$SCAN_DIGEST"; fi 
           if [ ${{ matrix.names }} == "db" ] ; then echo "::set-output name=scan_db_digest::$SCAN_DIGEST"; fi
           echo "Hash of ${{ matrix.names }}-scan.json is: $SCAN_DIGEST"
 
@@ -120,7 +120,7 @@ jobs:
         packages: write
         id-token: write
     env:
-        SCAN_APP_DIGEST: "${{ needs.security-scan.outputs.scan-app-digest }}"
+        SCAN_BANKAPP_DIGEST: "${{ needs.security-scan.outputs.scan-bankapp-digest }}"
         SCAN_DB_DIGEST: "${{ needs.security-scan.outputs.scan-db-digest }}"
     strategy:
         fail-fast: false
@@ -139,7 +139,7 @@ jobs:
     - name: Verify scan
       run: |
         set -euo pipefail
-        if [ ${{ matrix.names }} == "app" ]; then SCAN_DIGEST=$SCAN_APP_DIGEST ; fi
+        if [ ${{ matrix.names }} == "bankapp" ]; then SCAN_DIGEST=$SCAN_BANKAPP_DIGEST ; fi
         if [ ${{ matrix.names }} == "db" ]; then SCAN_DIGEST=$SCAN_DB_DIGEST ; fi 
         echo "Hash of ${{ matrix.names }}-scan.json should be: $SCAN_DIGEST"
         COMPUTED_HASH=$(sha256sum ${{ matrix.names }}-scan.json | awk '{print $1}')
