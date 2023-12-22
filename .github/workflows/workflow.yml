@@ -17,12 +17,31 @@ env:
   registry: docker.io/moazrefat/bankapp
           
 jobs: 
+  get-containers:
+    runs-on: [ self-hosted ]
+    outputs:
+      names: ${{ steps.get-containers.outputs.names }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: get names
+        id: get-containers
+        run: |
+          echo "names=$(.github/scripts/get-names.sh)" >> $GITHUB_OUTPUT
+
+      - name: print containers names
+        id: print-containers
+        run: echo "${{ needs.get-containers.outputs.names }}"
+
+
   build-and-push:
     runs-on: [ self-hosted ]
+    needs: get-containers
     strategy:
         fail-fast: false
         matrix:
-          names: [app,db]
+          names: ${{ fromJson(needs.get-containers.outputs.names) }}
     name: ${{ matrix.names }}
     steps:
       - name: Checkout code
@@ -56,7 +75,7 @@ jobs:
         fail-fast: false
         matrix:
           names: [app,db]
-    name: ${{ matrix.names }}
+    name: ${{ fromJson(needs.get-containers.outputs.names) }}
     permissions:
       contents: read
     outputs:
@@ -103,6 +122,9 @@ jobs:
           names: [app,db]
     name: ${{ matrix.names }}
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
     - name: Download scan
       uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741 # v3.0.0
       with:
@@ -130,11 +152,11 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
   
-    - name: write key to sign 
-      run: '"echo $key" > cosign.key'
-      shell: bash
-      env: 
-        key: ${{ secrets.COSIGN_PRIVATE_KEY }}
+    # - name: write key to sign 
+    #   run: '"echo $key" > cosign.key'
+    #   shell: bash
+    #   env: 
+    #     key: ${{ secrets.COSIGN_PRIVATE_KEY }}
 
     - name: Sing image Scan
       run: cosign sign --yes --key cosign.key ${{ env.registry }}:${{ matrix.names }}
