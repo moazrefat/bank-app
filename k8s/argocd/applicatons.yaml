@@ -1,0 +1,46 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  name: bankapp
+  namespace: argocd
+spec:
+  destination:
+    namespace: bankapp-argocd
+    server: https://kubernetes.default.svc
+  project: bankapp
+  source:
+    path: k8s/bankapp/
+    repoURL: git@github.com:moazrefat/bankapp.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  name: db
+  namespace: argocd
+spec:
+  destination:
+    namespace: bankapp-argocd
+    server: https://kubernetes.default.svc
+  project: bankapp
+  source:
+    path: k8s/db/
+    repoURL: git@github.com:moazrefat/bankapp.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

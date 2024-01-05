@@ -30,7 +30,8 @@ spec:
       #     mountPath: /tmp
       containers:
       - name: bankapp
-        image: docker.io/moazrefat/bankapp:v1
+        # image: docker.io/moazrefat/bankapp:v1
+        image: docker.io/moazrefat/bankapp:distroless
         imagePullPolicy: Always
         resources:
           limits:

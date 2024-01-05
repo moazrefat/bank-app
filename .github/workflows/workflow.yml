@@ -171,17 +171,17 @@ jobs:
         COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
 
   
-  deploy:
-    runs-on: [ self-hosted ]
-    needs: [get-containers-list, verify-and-sign]
-    strategy:
-      fail-fast: false
-      matrix:
-        names: ${{ fromJson(needs.get-containers-list.outputs.names) }}
-    name: ${{ matrix.names }}-sign
-    steps:
-      - uses: actions-hub/kubectl@master
-        env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
-        with:
-          args: apply -f k8s/${{ matrix.names }}
+  # deploy:
+  #   runs-on: [ self-hosted ]
+  #   needs: [get-containers-list, verify-and-sign]
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       names: ${{ fromJson(needs.get-containers-list.outputs.names) }}
+  #   name: ${{ matrix.names }}-sign
+  #   steps:
+  #     - uses: actions-hub/kubectl@master
+  #       env:
+  #         KUBE_CONFIG: ${{ secrets.KUBECONFIG }}
+  #       with:
+  #         args: apply -f k8s/${{ matrix.names }}

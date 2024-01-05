@@ -1,0 +1,130 @@
+{
+  "invocation": {
+    "parameters": null,
+    "uri": "",
+    "event_id": "",
+    "builder.id": ""
+  },
+  "scanner": {
+    "uri": "pkg:github/aquasecurity/trivy@0.48.1",
+    "version": "0.48.1",
+    "db": {
+      "uri": "",
+      "version": ""
+    },
+    "result": {
+      "SchemaVersion": 2,
+      "CreatedAt": "2023-12-27T14:56:44.416198+01:00",
+      "ArtifactName": "moazrefat/bankapp:v1",
+      "ArtifactType": "container_image",
+      "Metadata": {
+        "OS": {
+          "Family": "alpine",
+          "Name": "3.19.0"
+        },
+        "ImageID": "sha256:2deff1be42f2d9e6fbd25bff94af73a35d391c6adca67f42c4619c90f6e3eb31",
+        "DiffIDs": [
+          "sha256:3ce819cc49704a39ce4614b73a325ad6efff50e1754005a2a8f17834071027dc",
+          "sha256:cc67fbde1706e74bbf38584c4eb57f00a924c973add0c9b41c705ebc4bcfd272",
+          "sha256:246bec5aff1a1742f46502c6d9c9959b0f0927070c5aff5402f9014d47879368",
+          "sha256:9c9ee93b25169a6e7e6fb550c7c465345b7cba2f217c5431bbc4a6af9d8a6d87",
+          "sha256:cb3db6b3b67032e68e3c78cd3286b8a34e8d6c4a21792fac50414ba736c75729",
+          "sha256:f364617d2395c6135a9a69954eb3518435b78cbe3040e8e3e7b51c8c14b39b00"
+        ],
+        "RepoTags": [
+          "bankapp:v1",
+          "moazrefat/bankapp:v1"
+        ],
+        "RepoDigests": [
+          "moazrefat/bankapp@sha256:efd5b519d84972453dd93f3eeaca8523f0d68a5347e20b2592b717675b21d15e"
+        ],
+        "ImageConfig": {
+          "architecture": "arm64",
+          "created": "2023-12-27T12:32:00.396422636Z",
+          "history": [
+            {
+              "created": "2023-12-08T01:39:30Z",
+              "created_by": "/bin/sh -c #(nop) ADD file:8182c73f869a899cf624a59c400acb8226776d15e4d3a0d240a94e65340540d0 in / "
+            },
+            {
+              "created": "2023-12-08T01:39:30Z",
+              "created_by": "/bin/sh -c #(nop)  CMD [\"/bin/sh\"]",
+              "empty_layer": true
+            },
+            {
+              "created": "2023-12-21T12:11:54Z",
+              "created_by": "WORKDIR /app",
+              "comment": "buildkit.dockerfile.v0"
+            },
+            {
+              "created": "2023-12-27T12:32:00Z",
+              "created_by": "COPY /workspace/assets /app/assets/ # buildkit",
+              "comment": "buildkit.dockerfile.v0"
+            },
+            {
+              "created": "2023-12-27T12:32:00Z",
+              "created_by": "COPY /workspace/pkg /app/pkg/ # buildkit",
+              "comment": "buildkit.dockerfile.v0"
+            },
+            {
+              "created": "2023-12-27T12:32:00Z",
+              "created_by": "COPY /workspace/views /app/views/ # buildkit",
+              "comment": "buildkit.dockerfile.v0"
+            },
+            {
+              "created": "2023-12-27T12:32:00Z",
+              "created_by": "COPY /workspace/bankapp /app/ # buildkit",
+              "comment": "buildkit.dockerfile.v0"
+            },
+            {
+              "created": "2023-12-27T12:32:00Z",
+              "created_by": "EXPOSE map[8080/tcp:{}]",
+              "comment": "buildkit.dockerfile.v0",
+              "empty_layer": true
+            },
+            {
+              "created": "2023-12-27T12:32:00Z",
+              "created_by": "ENTRYPOINT [\"/app/bankapp\" \"-p\" \"8080\"]",
+              "comment": "buildkit.dockerfile.v0",
+              "empty_layer": true
+            }
+          ],
+          "os": "linux",
+          "rootfs": {
+            "type": "layers",
+            "diff_ids": [
+              "sha256:3ce819cc49704a39ce4614b73a325ad6efff50e1754005a2a8f17834071027dc",
+              "sha256:cc67fbde1706e74bbf38584c4eb57f00a924c973add0c9b41c705ebc4bcfd272",
+              "sha256:246bec5aff1a1742f46502c6d9c9959b0f0927070c5aff5402f9014d47879368",
+              "sha256:9c9ee93b25169a6e7e6fb550c7c465345b7cba2f217c5431bbc4a6af9d8a6d87",
+              "sha256:cb3db6b3b67032e68e3c78cd3286b8a34e8d6c4a21792fac50414ba736c75729",
+              "sha256:f364617d2395c6135a9a69954eb3518435b78cbe3040e8e3e7b51c8c14b39b00"
+            ]
+          },
+          "config": {
+            "Entrypoint": [
+              "/app/bankapp",
+              "-p",
+              "8080"
+            ],
+            "Env": [
+              "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "WorkingDir": "/app"
+          }
+        }
+      },
+      "Results": [
+        {
+          "Target": "moazrefat/bankapp:v1 (alpine 3.19.0)",
+          "Class": "os-pkgs",
+          "Type": "alpine"
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "scanStartedOn": "2023-12-27T14:56:44.417048+01:00",
+    "scanFinishedOn": "2023-12-27T14:56:44.417048+01:00"
+  }
+}

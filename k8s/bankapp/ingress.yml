@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/auth-tls-pass-certificate-to-upstream: "true"
+    nginx.ingress.kubernetes.io/auth-tls-secret: bankapp/ca-cert
+    nginx.ingress.kubernetes.io/auth-tls-verify-client: "on"
+    nginx.ingress.kubernetes.io/auth-tls-verify-depth: "3"
+  name: bankapp
+  namespace: bankapp
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: bankapp.moaaz.local
+    http:
+      paths:
+      - backend:
+          service:
+            name: bankapp
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - bankapp.moaaz.local
+    secretName: server-tls

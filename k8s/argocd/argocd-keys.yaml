@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: argocd-ssh-keypair
+    namespace: argocd 
+type: Opaque
+stringData:
+    core-ci: |
+        -----BEGIN OPENSSH PRIVATE KEY-----
+        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
+        UGBw==
+        -----END OPENSSH PRIVATE KEY-----
+    core-ci.pub: |
+        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC95UQverrZZdmHVH06gytCh2TTRHSan6JBgZ0tmSHfEhZQUG5QHCk0V1QQKkn9MFLyHAraRIr5Mu0PNwQXaQHMs3vhvz/iWObnIl/MkP1A25RrOwYDqMWyZ1ocUtpDr0Y8iUL/0SOT0QSuIJ+nhtdb3JDi+bpIF1EpBK0fkmrlPbvWgBvrFn0yUKY7HW6jpvd9sBRKSXsK70diYD2DDEmLPZp3x/NT98SipsnccA95qWyGxCgLBEoeIshkk8xv1AZ9QVjH5Uhj9zAFurULOcvDE4G1EHHDz3w0/IBYsHoZ5C6danDZoikmZlh/nWF0+lcpcWiM7WXBUwt7uoE+6T5XWcynnINqkg95BFoB+KTooIodjatC2gTpCDKPZGzxVId/XZOvvGEIgATY/14T1KCk34k0NDn8P/QsCyFqFnRD5LFir9GF+PEFrXxLgTsjKeK6FBd3Ho/JwZn0L5VbuzdqZzGWsUHjCt1M4R4EFtEZSycsVGV4njTWadCJlwyHts6kLbWkRv0ppclY0aSglnHORkarELPcvslaFn5XYVrCzzdLfsjRp3qkZPuw8RDkZyPCwgIDsULWJFUPQJFtYZv/UaRcFqz9mfdOTRv0jjQ8ytRJfIbOdB+ei93XBw10ZcCBSJTjI8rFWb/BoU9mtUzoscdkfotUyCjQQVCq6SEoKw== moaaz.noaman@moaaz.noaman-K36PXJ6QD1
